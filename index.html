@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Siz uchun maxsus maktub</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            margin: 0; 
+            background: #ff4d6d; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            overflow: hidden; 
+            color: white; 
+            text-align: center;
+            position: relative;
+        }
+        
+        /* Orqa fonda suzib yuruvchi yuraklar */
+        .heart-bg { 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            pointer-events: none; 
+            z-index: 1;
+        }
+        .heart {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 24px;
+            animation: floatUp 6s linear infinite;
+            bottom: -50px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-105vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Oq oyna (Konteyner) */
+        .box { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 35px 25px; 
+            border-radius: 24px; 
+            color: #333; 
+            z-index: 10; 
+            width: 85%; 
+            max-width: 360px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.4s ease;
+        }
+        
+        h2 { color: #ff4d6d; margin-bottom: 15px; font-size: 24px; }
+        p { font-size: 16px; line-height: 1.6; color: #4a4a4a; margin-bottom: 20px; }
+        
+        /* Tugmalar */
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            min-height: 60px;
+        }
+        .btn { 
+            background: #ff4d6d; 
+            color: white; 
+            border: none; 
+            padding: 12px 25px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 16px;
+            width: 100%;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 10px rgba(255, 77, 109, 0.3);
+        }
+        .btn:active { transform: scale(0.98); }
+        .btn:hover { background: #ff758f; }
+        
+        .hidden { display: none !important; }
+        
+        /* Variantlar uchun maxsus uslub */
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+        }
+        .btn-opt {
+            padding: 12px;
+            font-size: 16px;
+            border-radius: 12px;
+            border: 2px solid #ff4d6d;
+            background: white;
+            color: #ff4d6d;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+        .btn-ha {
+            background: #ff4d6d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="hearts" class="heart-bg"></div>
+
+    <!-- 1-QADAM: MAKTUB KO'RINIShI -->
+    <div class="box" id="step1">
+        <div style="font-size: 50px; margin-bottom: 10px;">💌</div>
+        <h2>Sizga maktub bor</h2>
+        <p>Ustiga bosib oching...</p>
+        <div class="btn-container">
+            <button class="btn" onclick="nextStep(2)">Maktubni ochish</button>
+        </div>
+    </div>
+
+    <!-- 2-QADAM: SAMIMIY GAPLAR (1-variant o'rnatildi) -->
+    <div class="box hidden" id="step2">
+        <h2>Munojat...</h2>
+        <p>Ba'zida sening oddiygina bir tabassuming kunimni butunlay yoritib yuborishini o'zing ham bilmasang kerak. Sen bilan gaplashgan har bir daqiqam men uchun juda qadrli. Yaxshiyamki borsan...</p>
+        <div class="btn-container">
+            <button class="btn" onclick="nextStep(3)">Keyingisi ✨</button>
+        </div>
+    </div>
+
+    <!-- 3-QADAM: INTERAKTIV SAVOL -->
+    <div class="box hidden" id="step3">
+        <h2>Sizdan kichik so'rov...</h2>
+        <p>Munojat, meni yaxshi ko'rasanmi?</p>
+        <div class="options-container">
+            <button class="btn-opt btn-ha" onclick="nextStep(4)">Ha</button>
+            <button class="btn-opt" id="noBtn" onclick="removeBtn('noBtn')">Yo'q</button>
+            <button class="btn-opt" id="maybeBtn" onclick="removeBtn('maybeBtn')">Bimman</button>
+        </div>
+    </div>
+
+    <!-- 4-QADAM: YAKUNIY REAKSIYA -->
+    <div class="box hidden" id="step4">
+        <div style="font-size: 60px; margin-bottom: 10px; animation: pulse 1s infinite alternate;">💖</div>
+        <h2>Katta rahmat!</h2>
+        <p>Bu javobing mening qalbimga cheksiz quvonch olib kirdi.</p>
+        <h2 style="color: #ff4d6d; margin-top: 15px; font-weight: bold; font-size: 22px;">Men seni yaxshi ko'raman ♥️</h2>
+        <p style="font-size: 14px; color: #888; margin-top: 10px; margin-bottom: 0;">Hurmat bilan, Shoxruz</p>
+    </div>
+
+    <script>
+        function nextStep(stepNum) {
+            document.querySelectorAll('.box').forEach(box => box.classList.add('hidden'));
+            document.getElementById('step' + stepNum).classList.remove('hidden');
+            
+            if(stepNum === 4) {
+                // Ha bosilganda fondagi yuraklar daxshat tezlashadi
+                setInterval(createHeart, 80);
+            }
+        }
+
+        // Yo'q va Bimman tugmalarini bosganda silliq yo'qotish
+        function removeBtn(btnId) {
+            const btn = document.getElementById(btnId);
+            btn.style.transform = 'scale(0)';
+            setTimeout(() => {
+                btn.classList.add('hidden');
+            }, 200);
+        }
+
+        function createHeart() {
+            const container = document.getElementById('hearts');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's'; 
+            heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+            
+            container.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Dastlabki fondagi sekin yuraklar
+        setInterval(createHeart, 400);
+    </script>
+</body>
+</html>
