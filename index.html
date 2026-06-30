@@ -112,7 +112,6 @@
 <body>
     <div id="hearts" class="heart-bg"></div>
 
-    <!-- 1-QADAM: MAKTUB KO'RINIShI -->
     <div class="box" id="step1">
         <div style="font-size: 50px; margin-bottom: 10px;">💌</div>
         <h2>Sizga maktub bor</h2>
@@ -122,28 +121,33 @@
         </div>
     </div>
 
-    <!-- 2-QADAM: SAMIMIY GAPLAR (1-variant o'rnatildi) -->
     <div class="box hidden" id="step2">
         <h2>Munojat...</h2>
         <p>Ba'zida sening oddiygina bir tabassuming kunimni butunlay yoritib yuborishini o'zing ham bilmasang kerak. Sen bilan gaplashgan har bir daqiqam men uchun juda qadrli. Yaxshiyamki borsan...</p>
         <div class="btn-container">
-            <button class="btn" onclick="nextStep(3)">Keyingisi ✨</button>
+            <button class="btn" onclick="nextStep(3)">Davomi... ✨</button>
         </div>
     </div>
 
-    <!-- 3-QADAM: INTERAKTIV SAVOL -->
     <div class="box hidden" id="step3">
+        <h2>Yana bir gap...</h2>
+        <p>Dunyoda chiroyli qizlar ko'p, lekin sening ichki dunyong, aqling va o'zingni tutishing ularning hammasidan ajralib turadi. Sen bilan o'tgan har bir daqiqa men uchun qadrli. Xohlagandimki, bu kichik sahifani ochganingda yuzingda tabassum paydo bo'lsin. Chunki bu dunyoga sening tabassuming juda yarashadi...</p>
+        <div class="btn-container">
+            <button class="btn" onclick="nextStep(4)">Keyingisi 🌸</button>
+        </div>
+    </div>
+
+    <div class="box hidden" id="step4">
         <h2>Sizdan kichik so'rov...</h2>
         <p>Munojat, meni yaxshi ko'rasanmi?</p>
         <div class="options-container">
-            <button class="btn-opt btn-ha" onclick="nextStep(4)">Ha</button>
+            <button class="btn-opt btn-ha" onclick="nextStep(5)">Ha</button>
             <button class="btn-opt" id="noBtn" onclick="removeBtn('noBtn')">Yo'q</button>
             <button class="btn-opt" id="maybeBtn" onclick="removeBtn('maybeBtn')">Bimman</button>
         </div>
     </div>
 
-    <!-- 4-QADAM: YAKUNIY REAKSIYA -->
-    <div class="box hidden" id="step4">
+    <div class="box hidden" id="step5">
         <div style="font-size: 60px; margin-bottom: 10px; animation: pulse 1s infinite alternate;">💖</div>
         <h2>Katta rahmat!</h2>
         <p>Bu javobing mening qalbimga cheksiz quvonch olib kirdi.</p>
@@ -156,7 +160,7 @@
             document.querySelectorAll('.box').forEach(box => box.classList.add('hidden'));
             document.getElementById('step' + stepNum).classList.remove('hidden');
             
-            if(stepNum === 4) {
+            if(stepNum === 5) {
                 // Ha bosilganda fondagi yuraklar daxshat tezlashadi
                 setInterval(createHeart, 80);
             }
@@ -192,4 +196,5 @@
         setInterval(createHeart, 400);
     </script>
 </body>
-</html>
+    </html>
+    
